@@ -1,4 +1,6 @@
 " .vimrc file by neotheicebird
+" source of inspiration:
+" https://github.com/mbrochh/mbrochh-dotfiles/blob/master/.vimrc
 
 set encoding=utf-8
 autocmd! bufwritepost .vimrc source % " mbrochh says No need to go to terminal for the changes to take effect in the save file
@@ -112,9 +114,33 @@ map <Leader>x :%s/\s\+$//
 set laststatus=2
 " let g:Powerline_symbols = 'fancy'
 
+" Settings for vim-markdown
+" ==========================
+" let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_initial_foldlevel=1
+
+" Python folding
+" ==========================
+" mkdir -p ~/.vim/ftplugin
+" wget -O ~/.vim/ftplugin/python_editing.vim http://www.vim.org/scripts/download_script.php?src_id=5492
+set nofoldenable
+"
 " settings for ctrlp
 " ===================
 let g:ctrlp_max_height = 30
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*
+
+" Settings for jedi-vim
+" cd ~/.vim/bundle
+" git clone git://github.com/davidhalter/jedi-vim.git
+
+"let g:jedi#related_names_command = "<leader>z"
+let g:jedi#usages_command = "<leader>z"
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
 
 " Color scheme
 " =============
