@@ -2,8 +2,10 @@
 
 set encoding=utf-8
 autocmd! bufwritepost .vimrc source % " mbrochh says No need to go to terminal for the changes to take effect in the save file
+filetype on
+filetype plugin indent on
 syntax on
-call pathogen#infect() 
+call pathogen#infect()
 
 " General option
 " ===============
@@ -21,6 +23,26 @@ set bs=2 " make backspace behave normal! even b4 this line it was normal I guess
 set tabstop=4 " tab = 4 spaces
 set shiftwidth=4 " autointend takes as much spaces as tabstop
 set expandtab " all tabs are converted to spaces
+
+set nowrap " don't automatically wrap on load
+set tw=79 " width of document (used by gd)
+set fo-=t " don't automatically wrap text when typing
+
+" Awesome line number magic
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
+
+nnoremap <Leader>l :call NumberToggle()<cr>
+:au FocusLost * set number
+:au FocusGained * set relativenumber
+autocmd InsertEnter * set number
+autocmd InsertLeave * set relativenumber
+set relativenumber
 
 " Improving code completion
 set completeopt=longest,menuone
@@ -50,9 +72,10 @@ map <c-h> <c-w>h
 
 map <Leader>, <esc>:tabprevious<CR>
 map <Leader>. <esc>:tabnext<CR>
+map <Leader>t <esc>:tabnew<CR>
 
 " sort text (like imports) alphabetically
-vnoremap <Leader>s :sort<CR> 
+vnoremap <Leader>s :sort<CR>
 
 " Custom mappings
 " ================
@@ -78,9 +101,22 @@ inoremap <silent>k <C-R>=OmniPopup('k')<CR>
 " =========================
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 au InsertLeave * match ExtraWhitespace /\s\+$/
-map <Leader>x :%s/\s\+$//    
+map <Leader>x :%s/\s\+$//
 
-    " Color scheme
+" ============================================================================"
+" Python-ide Plugins
+" ============================================================================
+
+" Settings for vim-powerline
+" ===========================
+set laststatus=2
+" let g:Powerline_symbols = 'fancy'
+
+" settings for ctrlp
+" ===================
+let g:ctrlp_max_height = 30
+
+" Color scheme
 " =============
 set t_Co=256
 color wombat256mod
@@ -88,3 +124,10 @@ color wombat256mod
 set colorcolumn=80
 highlight ColorColumn ctermbg=233
 map <Leader>v :source ~/.vimrc
+" ===================
+let g:ctrlp_max_height = 30
+
+" easier formatting of paragraphs
+vmap Q gq
+nmap Q gqap
+
