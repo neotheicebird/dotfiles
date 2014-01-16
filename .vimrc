@@ -124,7 +124,7 @@ let g:vim_markdown_initial_foldlevel=1
 " mkdir -p ~/.vim/ftplugin
 " wget -O ~/.vim/ftplugin/python_editing.vim http://www.vim.org/scripts/download_script.php?src_id=5492
 set nofoldenable
-"
+
 " settings for ctrlp
 " ===================
 let g:ctrlp_max_height = 30
@@ -132,20 +132,33 @@ set wildignore+=*.pyc
 set wildignore+=*_build/*
 set wildignore+=*/coverage/*
 
+
+" make yank copy to the global system clipboard
+set clipboard=unnamed
+
+" Fixing the copy & paste madness
+" ================================
+vmap <C-y> y:call system("xclip -i -selection clipboard",getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
+nmap <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
+imap <C-v> <Esc><C-v>a
+
+
 " Settings for jedi-vim
 " cd ~/.vim/bundle
 " git clone git://github.com/davidhalter/jedi-vim.git
 
-"let g:jedi#related_names_command = "<leader>z"
-let g:jedi#usages_command = "<leader>z"
+let g:jedi#related_names_command = "<leader>z"
+let g:jedi#usages_command = "<leader>n"
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
 map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
 
+
 " Color scheme
 " =============
 set t_Co=256
-color wombat256mod
+color wombat256mod " Dark theme
+" color peaksea " Light theme
 
 set colorcolumn=80
 highlight ColorColumn ctermbg=233
